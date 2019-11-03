@@ -6,14 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>STARFM | Hexo</title>
+  <title>STARFM介绍 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="数据融合算法之时空自适应反射率融合模型（STARFM）详细介绍一、解决的问题Landsat卫星自发射以后，在全球范围内取得了巨大的成功，其合理的波段设置、较好的空间分辨率以及数据的生产模型和精度控制，为反演地表参量，获取地表参数带来很大价值。但是其应用也受到很多因素的限制，例如16天的重放周期、云的污染等等，都给其应用带来了很大的困难。16天的重访周期对于地表变化较缓慢捕捉效果可以接受，但是在地表">
+  <meta name="description" content="一、解决的问题Landsat卫星自发射以后，在全球范围内取得了巨大的成功，其合理的波段设置、较好的空间分辨率以及数据的生产模型和精度控制，为反演地表参量，获取地表参数带来很大价值。但是其应用也受到很多因素的限制，例如16天的重放周期、云的污染等等，都给其应用带来了很大的困难。16天的重访周期对于地表变化较缓慢捕捉效果可以接受，但是在地表发生重大的变化，例如植被生长季周期内，其16天周期较长，且获得">
+<meta name="keywords" content="数据融合">
 <meta property="og:type" content="article">
-<meta property="og:title" content="STARFM">
+<meta property="og:title" content="STARFM介绍">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;03&#x2F;STARFM&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="数据融合算法之时空自适应反射率融合模型（STARFM）详细介绍一、解决的问题Landsat卫星自发射以后，在全球范围内取得了巨大的成功，其合理的波段设置、较好的空间分辨率以及数据的生产模型和精度控制，为反演地表参量，获取地表参数带来很大价值。但是其应用也受到很多因素的限制，例如16天的重放周期、云的污染等等，都给其应用带来了很大的困难。16天的重访周期对于地表变化较缓慢捕捉效果可以接受，但是在地表">
+<meta property="og:description" content="一、解决的问题Landsat卫星自发射以后，在全球范围内取得了巨大的成功，其合理的波段设置、较好的空间分辨率以及数据的生产模型和精度控制，为反演地表参量，获取地表参数带来很大价值。但是其应用也受到很多因素的限制，例如16天的重放周期、云的污染等等，都给其应用带来了很大的困难。16天的重访周期对于地表变化较缓慢捕捉效果可以接受，但是在地表发生重大的变化，例如植被生长季周期内，其16天周期较长，且获得">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?C_{t}=\sum&amp;space;\left&amp;space;(&amp;space;F_{t}^{i}&amp;space;*A_{t}^{i}\right&amp;space;)">
 <meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?L\left&amp;space;(&amp;space;x_{i}&amp;space;,y_{j},t_{k}\right&amp;space;)=M\left&amp;space;(&amp;space;x_{i}&amp;space;,y_{j},t_{k}\right&amp;space;)&amp;plus;\varepsilon&amp;space;_{k}">
@@ -37,7 +38,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;svg.latex?\sigma_{mm}&amp;space;=&amp;space;(\sigma_{m}^{2}&amp;plus;\sigmsa_{m}^{2})^{1&#x2F;2}=\sqrt{2}*\sigma_{m}">
 <meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;svg.latex?\sigma_{lm}&amp;space;=&amp;space;(\sigma_{m}^{2}&amp;plus;\sigma_{l}^{2})^{1&#x2F;2}">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;%5Cimages%5C%E6%B5%81%E7%A8%8B.jpg">
-<meta property="og:updated_time" content="2019-11-03T13:05:40.816Z">
+<meta property="og:updated_time" content="2019-11-03T15:43:06.323Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?C_{t}=\sum&amp;space;\left&amp;space;(&amp;space;F_{t}^{i}&amp;space;*A_{t}^{i}\right&amp;space;)">
   
@@ -182,20 +183,20 @@
         
   
     <h1 class="article-title" itemprop="name">
-      STARFM
+      STARFM介绍
     </h1>
   
 
         
         <a href="/2019/11/03/STARFM/" class="archive-article-date">
-  	<time datetime="2019-11-03T12:40:56.455Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-03</time>
+  	<time datetime="2019-11-03T14:04:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-03</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="数据融合算法之时空自适应反射率融合模型（STARFM）详细介绍"><a href="#数据融合算法之时空自适应反射率融合模型（STARFM）详细介绍" class="headerlink" title="数据融合算法之时空自适应反射率融合模型（STARFM）详细介绍"></a>数据融合算法之时空自适应反射率融合模型（STARFM）详细介绍</h1><h2 id="一、解决的问题"><a href="#一、解决的问题" class="headerlink" title="一、解决的问题"></a>一、解决的问题</h2><p>Landsat卫星自发射以后，在全球范围内取得了巨大的成功，其合理的波段设置、较好的空间分辨率以及数据的生产模型和精度控制，为反演地表参量，获取地表参数带来很大价值。但是其应用也受到很多因素的限制，例如16天的重放周期、云的污染等等，都给其应用带来了很大的困难。16天的重访周期对于地表变化较缓慢捕捉效果可以接受，但是在地表发生重大的变化，例如植被生长季周期内，其16天周期较长，且获得的影响很有可能被云污染，导致在生长季研究区域内部没有观测记录可用。STARFM模型就是在这样的情况下提出来的。为了改善Landsat影像重访周期所造成的观测数据不足的问题，Gao Feng等人在2006年首次提出了将MODIS数据与landsat影像融合以生成具有长时间序列的高空间分辨率遥感反射率数据，用于辅助获取地表参量。</p>
+        <h2 id="一、解决的问题"><a href="#一、解决的问题" class="headerlink" title="一、解决的问题"></a>一、解决的问题</h2><p>Landsat卫星自发射以后，在全球范围内取得了巨大的成功，其合理的波段设置、较好的空间分辨率以及数据的生产模型和精度控制，为反演地表参量，获取地表参数带来很大价值。但是其应用也受到很多因素的限制，例如16天的重放周期、云的污染等等，都给其应用带来了很大的困难。16天的重访周期对于地表变化较缓慢捕捉效果可以接受，但是在地表发生重大的变化，例如植被生长季周期内，其16天周期较长，且获得的影响很有可能被云污染，导致在生长季研究区域内部没有观测记录可用。STARFM模型就是在这样的情况下提出来的。为了改善Landsat影像重访周期所造成的观测数据不足的问题，Gao Feng等人在2006年首次提出了将MODIS数据与landsat影像融合以生成具有长时间序列的高空间分辨率遥感反射率数据，用于辅助获取地表参量。</p>
 <h2 id="二、模型简介"><a href="#二、模型简介" class="headerlink" title="二、模型简介"></a>二、模型简介</h2><p>STARFM模型的基本思想是将Landsat高空间分辨率和MODIS的高时间分辨率的优势结合起来。利用数学模型，通过使用在观测时间段内使用多对（实际操作下为两对）同一时间下获取的影像，结合在预测日期粗空间分辨率的反射率数据，计算得到在两幅Landsat影像时间段内无观测影像的高分辨率反射率数据。该模型本质上是通过在定义的搜索窗（searching window）内，通过非监督分类以及阈值分割判定与中心像元光谱特征相似的像元，对这些像元进行筛选（sample filtering），获得能提供有效反射率信息的像元，对有效像元反射率通过组合加权的方法来整合以计算中心像元，也即预测日期时刻某一位置反射率的值。</p>
 <!-- STARFM模型在具体操作情况下，从待预测日期(T0)前后精细空间分辨率（日期分别为T1与T2）和一幅待预测日期(T0)处的粗空间分辨率来获得T0时刻高空间分辨率的地表反射率。在进行数据融合的操作前，首先需要对影像进行辐射定标和大气校正的预处理操作，对云污染的像元进行掩膜处理。 -->
 <p>从数据的角度上来说，通常一个粗空间分辨率像元的反射率可以通过该像元范围内各精细空间分辨率反射率值与其对整体的贡献比加权求和得到（具体公式见理论基础部分），但是现在已知的是一个粗空间分辨率像元的反射率值，即使在知道每个像元的贡献率情况下，需要通过该方式反解精细空间分率的值也是很难的。因此Gao Feng等人提出通过周围的像元反射率值得到预测信息。该模型预测的关键是：寻找与待预测位置像元光谱特征相似且无云污染的邻近像元。</p>
@@ -308,6 +309,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">数据融合</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -501,6 +513,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">545实验室</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">数据融合</a>
               </li>
             
             <div class="clearfix"></div>
