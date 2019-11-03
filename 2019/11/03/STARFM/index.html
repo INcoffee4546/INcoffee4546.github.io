@@ -6,17 +6,40 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hello World | Hexo</title>
+  <title>STARFM | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="数据融合算法之时空自适应反射率融合模型（STARFM）详细介绍一、解决的问题Landsat卫星自发射以后，在全球范围内取得了巨大的成功，其合理的波段设置、较好的空间分辨率以及数据的生产模型和精度控制，为反演地表参量，获取地表参数带来很大价值。但是其应用也受到很多因素的限制，例如16天的重放周期、云的污染等等，都给其应用带来了很大的困难。16天的重访周期对于地表变化较缓慢捕捉效果可以接受，但是在地表">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;03&#x2F;hello-world&#x2F;index.html">
+<meta property="og:title" content="STARFM">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;03&#x2F;STARFM&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="数据融合算法之时空自适应反射率融合模型（STARFM）详细介绍一、解决的问题Landsat卫星自发射以后，在全球范围内取得了巨大的成功，其合理的波段设置、较好的空间分辨率以及数据的生产模型和精度控制，为反演地表参量，获取地表参数带来很大价值。但是其应用也受到很多因素的限制，例如16天的重放周期、云的污染等等，都给其应用带来了很大的困难。16天的重访周期对于地表变化较缓慢捕捉效果可以接受，但是在地表">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-03T10:13:19.830Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?C_{t}=\sum&amp;space;\left&amp;space;(&amp;space;F_{t}^{i}&amp;space;*A_{t}^{i}\right&amp;space;)">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?L\left&amp;space;(&amp;space;x_{i}&amp;space;,y_{j},t_{k}\right&amp;space;)=M\left&amp;space;(&amp;space;x_{i}&amp;space;,y_{j},t_{k}\right&amp;space;)&amp;plus;\varepsilon&amp;space;_{k}">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?L\left&amp;space;(&amp;space;x_{i}&amp;space;,y_{j},t_{0}\right&amp;space;)=M\left&amp;space;(&amp;space;x_{i}&amp;space;,y_{j},t_{0}\right&amp;space;)&amp;plus;\varepsilon&amp;space;_{0}">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?\varepsilon_{k}=\varepsilon&amp;space;_{0}">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?L\left&amp;space;(&amp;space;x_{i},y_{j},t_{0}&amp;space;\right&amp;space;)=M\left&amp;space;(&amp;space;x_{i},y_{j},t_{0}&amp;space;\right&amp;space;)&amp;plus;L\left&amp;space;(&amp;space;x_{i},y_{j},t_{k}&amp;space;\right&amp;space;)-M\left&amp;space;(&amp;space;x_{i},y_{j},t_{k}&amp;space;\right&amp;space;)">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?L\left&amp;space;(&amp;space;x_{w&#x2F;2}&amp;space;,y_{w&#x2F;2},t_{0}\right&amp;space;)&amp;space;=\sum_{i=1}^{w}\sum_{j=1}^{w}\sum_{k=1}^{n}&amp;space;W_{ijk}*\left&amp;space;(&amp;space;M\left&amp;space;(x_{i},y_{j},t_{0}&amp;space;\right&amp;space;)&amp;space;&amp;plus;L(x_{i},y_{j},t_{k})-M(x_{i},y_{j},t_{k})\right&amp;space;)">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?S_{ijk}=\left&amp;space;|&amp;space;L(x_{i},y_{j},t_{k})-&amp;space;M(x_{i},y_{j},t_{k})\right&amp;space;|">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?T_{ijk}=\left&amp;space;|&amp;space;M(x_{i},y_{j},t_{k})-&amp;space;M(x_{i},y_{j},t_{0})\right&amp;space;|">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?d_{ijk}=&amp;space;\left&amp;space;[&amp;space;\right(x_{w&#x2F;2}-x_{i}&amp;space;\right)&amp;space;)^{2}&amp;plus;(y_{w&#x2F;2}-y_{j})^{2}&amp;space;]^{1&#x2F;2}">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?D_{ijk}=1.0&amp;plus;d_{ijk}&#x2F;A">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?C_{ijk}=S_{ijk}*T_{ijk}*D_{ijk}">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?C_{ijk}=&amp;space;In(S_{ijk}*B&amp;plus;1)*In(T_{ijk}*B&amp;plus;1)*D_{ijk}">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?W_{ijk}=(1&#x2F;C_{ijk})&#x2F;\sum_{i=1}^{w}\sum_{j=1}^{w}\sum_{k=1}^{n}(1&#x2F;C_{ijk})">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?S_{ijk}&lt;max(\left&amp;space;|&amp;space;L(x_{w&#x2F;2},y_{w&#x2F;2},t_{k})-&amp;space;M(x_{w&#x2F;2},y_{w&#x2F;2},t_{k})\right&amp;space;|)">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?T_{ijk}&lt;max(\left&amp;space;|&amp;space;M(x_{w&#x2F;2},y_{w&#x2F;2},t_{k})&amp;space;-&amp;space;M(x_{w&#x2F;2},y_{w&#x2F;2},t_{0})\right&amp;space;|)">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;svg.latex?\sigma_{l}">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;svg.latex?\sigma_{m}">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;svg.latex?S_{ijk}&lt;max(\left&amp;space;|&amp;space;L(x_{w&#x2F;2},y_{w&#x2F;2},t_{k})&amp;space;-&amp;space;M(x_{w&#x2F;2},y_{w&#x2F;2},t_{k})\right&amp;space;|)&amp;plus;\sigma_{lm}">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;svg.latex?T_{ijk}&lt;max(\left&amp;space;|&amp;space;M(x_{w&#x2F;2},y_{w&#x2F;2},t_{k})&amp;space;-&amp;space;M(x_{w&#x2F;2},y_{w&#x2F;2},t_{0})\right&amp;space;|)&amp;plus;\sigma_{mm}">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;svg.latex?\sigma_{mm}&amp;space;=&amp;space;(\sigma_{m}^{2}&amp;plus;\sigmsa_{m}^{2})^{1&#x2F;2}=\sqrt{2}*\sigma_{m}">
+<meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;svg.latex?\sigma_{lm}&amp;space;=&amp;space;(\sigma_{m}^{2}&amp;plus;\sigma_{l}^{2})^{1&#x2F;2}">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;%5Cimages%5C%E6%B5%81%E7%A8%8B.jpg">
+<meta property="og:updated_time" content="2019-11-03T13:05:40.816Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?C_{t}=\sum&amp;space;\left&amp;space;(&amp;space;F_{t}^{i}&amp;space;*A_{t}^{i}\right&amp;space;)">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -152,39 +175,110 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-STARFM" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      STARFM
     </h1>
   
 
         
-        <a href="/2019/11/03/hello-world/" class="archive-article-date">
-  	<time datetime="2019-11-03T10:13:19.830Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-03</time>
+        <a href="/2019/11/03/STARFM/" class="archive-article-date">
+  	<time datetime="2019-11-03T12:40:56.455Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-03</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <h1 id="数据融合算法之时空自适应反射率融合模型（STARFM）详细介绍"><a href="#数据融合算法之时空自适应反射率融合模型（STARFM）详细介绍" class="headerlink" title="数据融合算法之时空自适应反射率融合模型（STARFM）详细介绍"></a>数据融合算法之时空自适应反射率融合模型（STARFM）详细介绍</h1><h2 id="一、解决的问题"><a href="#一、解决的问题" class="headerlink" title="一、解决的问题"></a>一、解决的问题</h2><p>Landsat卫星自发射以后，在全球范围内取得了巨大的成功，其合理的波段设置、较好的空间分辨率以及数据的生产模型和精度控制，为反演地表参量，获取地表参数带来很大价值。但是其应用也受到很多因素的限制，例如16天的重放周期、云的污染等等，都给其应用带来了很大的困难。16天的重访周期对于地表变化较缓慢捕捉效果可以接受，但是在地表发生重大的变化，例如植被生长季周期内，其16天周期较长，且获得的影响很有可能被云污染，导致在生长季研究区域内部没有观测记录可用。STARFM模型就是在这样的情况下提出来的。为了改善Landsat影像重访周期所造成的观测数据不足的问题，Gao Feng等人在2006年首次提出了将MODIS数据与landsat影像融合以生成具有长时间序列的高空间分辨率遥感反射率数据，用于辅助获取地表参量。</p>
+<h2 id="二、模型简介"><a href="#二、模型简介" class="headerlink" title="二、模型简介"></a>二、模型简介</h2><p>STARFM模型的基本思想是将Landsat高空间分辨率和MODIS的高时间分辨率的优势结合起来。利用数学模型，通过使用在观测时间段内使用多对（实际操作下为两对）同一时间下获取的影像，结合在预测日期粗空间分辨率的反射率数据，计算得到在两幅Landsat影像时间段内无观测影像的高分辨率反射率数据。该模型本质上是通过在定义的搜索窗（searching window）内，通过非监督分类以及阈值分割判定与中心像元光谱特征相似的像元，对这些像元进行筛选（sample filtering），获得能提供有效反射率信息的像元，对有效像元反射率通过组合加权的方法来整合以计算中心像元，也即预测日期时刻某一位置反射率的值。</p>
+<!-- STARFM模型在具体操作情况下，从待预测日期(T0)前后精细空间分辨率（日期分别为T1与T2）和一幅待预测日期(T0)处的粗空间分辨率来获得T0时刻高空间分辨率的地表反射率。在进行数据融合的操作前，首先需要对影像进行辐射定标和大气校正的预处理操作，对云污染的像元进行掩膜处理。 -->
+<p>从数据的角度上来说，通常一个粗空间分辨率像元的反射率可以通过该像元范围内各精细空间分辨率反射率值与其对整体的贡献比加权求和得到（具体公式见理论基础部分），但是现在已知的是一个粗空间分辨率像元的反射率值，即使在知道每个像元的贡献率情况下，需要通过该方式反解精细空间分率的值也是很难的。因此Gao Feng等人提出通过周围的像元反射率值得到预测信息。该模型预测的关键是：寻找与待预测位置像元光谱特征相似且无云污染的邻近像元。</p>
+<!-- 由此有了**搜索窗（searching window）**的概念，用以定义寻找的范围，在此篇论文中定义的搜索窗的大小是1500m*1500m。将邻近像元值用于得到中心像元的值，就要评估各个待定像元的贡献百分比，由此引出了**组合加权函数（combined weighting funcion)**的概念。 -->
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h2 id="三、理论基础"><a href="#三、理论基础" class="headerlink" title="三、理论基础"></a>三、理论基础</h2><p>该部分阐述模型建模思想。在STARFM模型中，首先需要对Landsat和MODIS数据进行预处理（辐射定标、大气校正等），获取地面反射率。比较Landsat和MODIS数据的差异，可以发现两者在反射率上基本一致，但是存在一些差异，这通常是由于两者传感器获取的时间、数据生产方式、地理位置等因素造成的，这样的差异可以归为<strong>系统误差</strong>。<br>通常，我们可以认为一个粗空间分辨率（MODIS）像元的反射率可以通过其像元范围内部精细空间分辨率值及其各自所占丰度表示，具体公式可以表示成：</p>
+<img src="https://latex.codecogs.com/png.latex?C_{t}=\sum&space;\left&space;(&space;F_{t}^{i}&space;*A_{t}^{i}\right&space;)" title="C_{t}=\sum \left ( F_{t}^{i} *A_{t}^{i}\right )" />
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>其中F表示精细空间分辨率的地表反射率，A表示该位置下的丰度。我们需要解决的问题如何通过粗糙的空间分辨率的反射率值（此处即C）生成预测精细空间分辨率的地表反射率（此处即F），即使我们知道预测时刻每个像元所占的丰度且假设不随时间变化，从C的值反推其范围内的每个像元的反射率在数学上仍然是非常困难的。至此可以肯定通过该方式行不通，需要转换思路。因此Gao Feng等人设想能否通过邻近像元的信息来得到精细空间分辨率的反射率。<br>首先可以认为，Landsat影像的反射率可以通过MODIS观测记录加上两者的差异值，即表示成：</p>
+<img src="https://latex.codecogs.com/png.latex?L\left&space;(&space;x_{i}&space;,y_{j},t_{k}\right&space;)=M\left&space;(&space;x_{i}&space;,y_{j},t_{k}\right&space;)&plus;\varepsilon&space;_{k}" title="L\left ( x_{i} ,y_{j},t_{k}\right )=M\left ( x_{i} ,y_{j},t_{k}\right )+\varepsilon _{k}" />
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>同样的在时间T0(待预测时间)，也有类似的表达：</p>
+<img src="https://latex.codecogs.com/png.latex?L\left&space;(&space;x_{i}&space;,y_{j},t_{0}\right&space;)=M\left&space;(&space;x_{i}&space;,y_{j},t_{0}\right&space;)&plus;\varepsilon&space;_{0}" title="L\left ( x_{i} ,y_{j},t_{0}\right )=M\left ( x_{i} ,y_{j},t_{0}\right )+\varepsilon _{0}" />
 
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p>如果随着时间变化，地表的状态不变，此时可以认为两个时间下两种数据的差异是一样的，即有</p>
+<img src="https://latex.codecogs.com/png.latex?\varepsilon_{k}=\varepsilon&space;_{0}" title="\varepsilon_{k}=\varepsilon _{0}" />
+
+<p>对此进行变换，可以得到在T0时刻，所预测的精细空间反射率值：</p>
+<img src="https://latex.codecogs.com/png.latex?L\left&space;(&space;x_{i},y_{j},t_{0}&space;\right&space;)=M\left&space;(&space;x_{i},y_{j},t_{0}&space;\right&space;)&plus;L\left&space;(&space;x_{i},y_{j},t_{k}&space;\right&space;)-M\left&space;(&space;x_{i},y_{j},t_{k}&space;\right&space;)" title="L\left ( x_{i},y_{j},t_{0} \right )=M\left ( x_{i},y_{j},t_{0} \right )+L\left ( x_{i},y_{j},t_{k} \right )-M\left ( x_{i},y_{j},t_{k} \right )" />
+
+<p>然而这是在地表状态不发生变化的情况下才会有的结果，在自然状态下，这样的情况很难达到，主要有一下三个因素会影响地表状态：</p>
+<ol>
+<li>在以Landsat的空间分辨率考虑的情况下，MODIS观测记录中不是一个同质像元，其一个像元可能会包含着不同的地物类别；</li>
+<li>在预测时间之内，地物类别可能会从一种变为另外一类（例如裸地变为建筑物）；</li>
+<li>地物类别不变，但地物的状态（物候）和太阳几何双向反射分布函数(BRDF,solar geometry bidirectional reflectance distribution function)的改变也会改变反射率。</li>
+</ol>
+<p>只使用中心像元处的值预测没有考虑上诉三个因素，是不符合实际的。而中心像元计算的结果确实反映了预测日期的一部分信息，因此在STARFM中，此处使用<strong>中心像元周围的像元信息</strong>来进行预测，每一个待定的像元都会进行一次估算，对每次估算的结果赋予一个权重值，加权所得作为预测像元的值。<br>至此，待预测的像元的值可以表示为：</p>
+<img src="https://latex.codecogs.com/png.latex?L\left&space;(&space;x_{w/2}&space;,y_{w/2},t_{0}\right&space;)&space;=\sum_{i=1}^{w}\sum_{j=1}^{w}\sum_{k=1}^{n}&space;W_{ijk}*\left&space;(&space;M\left&space;(x_{i},y_{j},t_{0}&space;\right&space;)&space;&plus;L(x_{i},y_{j},t_{k})-M(x_{i},y_{j},t_{k})\right&space;)" title="L\left ( x_{w/2} ,y_{w/2},t_{0}\right ) =\sum_{i=1}^{w}\sum_{j=1}^{w}\sum_{k=1}^{n} W_{ijk}*\left ( M\left (x_{i},y_{j},t_{0} \right ) +L(x_{i},y_{j},t_{k})-M(x_{i},y_{j},t_{k})\right )" />
+
+<p>这个idea带出来两个关键的概念：一是<strong>搜索窗</strong>(searching window);二是<strong>光谱相似像元</strong>(spectrally similar neighbor pixels)。搜索窗口的大小可以自己指定，该模型成败的关键是是否能寻找到与中心像元光谱特征相似的像元。合理的选择结果能够为预测提供增益效果，若使用了错误的像元，其效果反而会变差。</p>
+<h2 id="四、模型实现"><a href="#四、模型实现" class="headerlink" title="四、模型实现"></a>四、模型实现</h2><p>此部分阐述如何将一个数学模型变成一个可以在计算机实现并且可以评价预测结果所需要考虑的方面</p>
+<h3 id="（一）寻找光谱相似的邻近像元"><a href="#（一）寻找光谱相似的邻近像元" class="headerlink" title="（一）寻找光谱相似的邻近像元"></a>（一）寻找光谱相似的邻近像元</h3><p>上面提到，这一步是成败的关键。如何通过影像来判断什么样的像元是与中心像元光谱特征相似的，这一步一般有一下两种处理的方法：<br>一：非监督分类，此处使用的是红光波段和近红外波段值。<br>二：阈值分割<br>设定阈值，根据指定的波段对波段值进行划分。</p>
+<h3 id="（二）权重函数的设置"><a href="#（二）权重函数的设置" class="headerlink" title="（二）权重函数的设置"></a>（二）权重函数的设置</h3><p>判断一个像素点计算的结果赋予多大的权重，是模型应用的另外一个关键。从通过以下三个方面来确定权重的大小：</p>
+<ol>
+<li>同一时间下Landsat与MODIS反射率的差异越小，其对应位置的权重越大，公式表达为:</li>
+</ol>
+<img src="https://latex.codecogs.com/png.latex?S_{ijk}=\left&space;|&space;L(x_{i},y_{j},t_{k})-&space;M(x_{i},y_{j},t_{k})\right&space;|" title="S_{ijk}=\left | L(x_{i},y_{j},t_{k})- M(x_{i},y_{j},t_{k})\right |" />
+
+<ol start="2">
+<li>给定时刻T1与预测时刻T0MODIS数据反射率的差异越小，其对应位置权重越大，公式表达为：</li>
+</ol>
+<img src="https://latex.codecogs.com/png.latex?T_{ijk}=\left&space;|&space;M(x_{i},y_{j},t_{k})-&space;M(x_{i},y_{j},t_{0})\right&space;|" title="T_{ijk}=\left | M(x_{i},y_{j},t_{k})- M(x_{i},y_{j},t_{0})\right |" />
+
+<ol start="3">
+<li>距离搜索窗中心像元越近的像元所占的权重越大，公式表达为：</li>
+</ol>
+<img src="https://latex.codecogs.com/png.latex?d_{ijk}=&space;\left&space;[&space;\right(x_{w/2}-x_{i}&space;\right)&space;)^{2}&plus;(y_{w/2}-y_{j})^{2}&space;]^{1/2}" title="d_{ijk}= \left [ \right(x_{w/2}-x_{i} \right) )^{2}+(y_{w/2}-y_{j})^{2} ]^{1/2}" />
+
+<p>在距离权重中，计算的是某像元与中心像元的欧式距离，在模型中一般需要转换为相对距离，将量纲去掉，计算方式如下：</p>
+<img src="https://latex.codecogs.com/png.latex?D_{ijk}=1.0&plus;d_{ijk}/A" title="D_{ijk}=1.0+d_{ijk}/A" />
+
+<p>其中A是一个距离常数，用以表示空间距离相对于光谱和时间距离的差异，可以自己指定，在论文中曾设置为750m，具体情况具体分析。<br>上诉三个因素可以判断一个位置的权重，但是需要综合考虑以上三个因素，得出最后的综合权重值，该指标可以有两种定义方式。</p>
+<p>其一为：</p>
+<img src="https://latex.codecogs.com/png.latex?C_{ijk}=S_{ijk}*T_{ijk}*D_{ijk}" title="C_{ijk}=S_{ijk}*T_{ijk}*D_{ijk}" />
+
+<p>其二为：</p>
+<img src="https://latex.codecogs.com/png.latex?C_{ijk}=&space;In(S_{ijk}*B&plus;1)*In(T_{ijk}*B&plus;1)*D_{ijk}" title="C_{ijk}= In(S_{ijk}*B+1)*In(T_{ijk}*B+1)*D_{ijk}" />
+
+<p>最后的权重计算如下：</p>
+<img src="https://latex.codecogs.com/png.latex?W_{ijk}=(1/C_{ijk})/\sum_{i=1}^{w}\sum_{j=1}^{w}\sum_{k=1}^{n}(1/C_{ijk})" title="W_{ijk}=(1/C_{ijk})/\sum_{i=1}^{w}\sum_{j=1}^{w}\sum_{k=1}^{n}(1/C_{ijk})" />
+
+
+<h3 id="（三）样本过滤-sample-filtering"><a href="#（三）样本过滤-sample-filtering" class="headerlink" title="（三）样本过滤(sample filtering)"></a>（三）样本过滤(sample filtering)</h3><p>在经过非监督分类之后，得到了与中心像元光谱信息类似的像元。但是此时并非每个待定的像元都可以为预测中心像元提供增益效果，需要对待定像元进行筛选。筛选的规则如下：<br>剔除受到云的影像的像元；如果邻近像元不能够提供比中心像元更好的光谱和空间信息，剔除。<br>第二个条件在数学上的表示为：</p>
+<img src="https://latex.codecogs.com/png.latex?S_{ijk}<max(\left&space;|&space;L(x_{w/2},y_{w/2},t_{k})-&space;M(x_{w/2},y_{w/2},t_{k})\right&space;|)" title="S_{ijk}<max(\left | L(x_{w/2},y_{w/2},t_{k})- M(x_{w/2},y_{w/2},t_{k})\right |)" />
+
+
+<img src="https://latex.codecogs.com/png.latex?T_{ijk}<max(\left&space;|&space;M(x_{w/2},y_{w/2},t_{k})&space;-&space;M(x_{w/2},y_{w/2},t_{0})\right&space;|)" title="T_{ijk}<max(\left | M(x_{w/2},y_{w/2},t_{k}) - M(x_{w/2},y_{w/2},t_{0})\right |)" />
+
+<p>上诉筛选条件没有考虑地理位置、大气校正方式差异带来的不确定性，因此为了完善模型，通常会在两个筛选条件后面加上此不确定度，分别设Landsat和MODIS数据不确定度为<img src="https://latex.codecogs.com/svg.latex?\sigma_{l}" title="\sigma_{l}" />和<img src="https://latex.codecogs.com/svg.latex?\sigma_{m}" title="\sigma_{m}" />。完善之后的表达式为：</p>
+<p>光谱差异：<br><img src="https://latex.codecogs.com/svg.latex?S_{ijk}<max(\left&space;|&space;L(x_{w/2},y_{w/2},t_{k})&space;-&space;M(x_{w/2},y_{w/2},t_{k})\right&space;|)&plus;\sigma_{lm}" title="S_{ijk}<max(\left | L(x_{w/2},y_{w/2},t_{k}) - M(x_{w/2},y_{w/2},t_{k})\right |)+\sigma_{lm}" /></p>
+<p>时间差异：<br><img src="https://latex.codecogs.com/svg.latex?T_{ijk}<max(\left&space;|&space;M(x_{w/2},y_{w/2},t_{k})&space;-&space;M(x_{w/2},y_{w/2},t_{0})\right&space;|)&plus;\sigma_{mm}" title="T_{ijk}<max(\left | M(x_{w/2},y_{w/2},t_{k}) - M(x_{w/2},y_{w/2},t_{0})\right |)+\sigma_{mm}" /></p>
+<p>参考光谱差异和时间差异的计算方式，有以下：</p>
+<img src="https://latex.codecogs.com/svg.latex?\sigma_{mm}&space;=&space;(\sigma_{m}^{2}&plus;\sigmsa_{m}^{2})^{1/2}=\sqrt{2}*\sigma_{m}" title="\sigma_{mm} = (\sigma_{m}^{2}+\sigma_{m}^{2})^{1/2}=\sqrt{2}*\sigma_{m}" />
+和
+<img src="https://latex.codecogs.com/svg.latex?\sigma_{lm}&space;=&space;(\sigma_{m}^{2}&plus;\sigma_{l}^{2})^{1/2}" title="\sigma_{lm} = (\sigma_{m}^{2}+\sigma_{l}^{2})^{1/2}" />
+
+<h3 id="模型计算流程"><a href="#模型计算流程" class="headerlink" title="模型计算流程"></a>模型计算流程</h3><p>STARFM模型可以看成是一个领域运算，每次运算都遵循相同的步骤。搜索窗的大小根据图像特征自己确定，每一次估算一个像元的反射率时，都大致以下图的步骤。</p>
+<p>具体流程可以如下图所示：</p>
+<p><img src="../../%5Cimages%5C%E6%B5%81%E7%A8%8B.jpg" alt="计算流程"></p>
+<p>计算流程做以下说明，使用T1时刻获取的一对不同空间分辨率的影像对加上预测时刻MODIS的观测值，生成T0时刻下精细空间分辨率的反射率产品。该图是计算一个中心像元所经过的流程，所示范围为一个搜索窗。首先对数据进行预处理得到地表的反射率，对MODIS数据进行重采样，使空间分辨率和Landsat影像相同。步骤（1）是对Landsat影像进行非监督分类，得到与中心像元光谱类似的像元；步骤（2）是对非监督分类的结果进行筛选；（3）步骤通过权重计算公式计算各个邻近像元的权重大小，颜色越深表示权重相应越大。步骤（4）是加权计算中心像元T0时刻的反射率。<br>每个像元都经过以上流程，得到最后的预测时刻研究区域精细空间分辨率的反射率影像。</p>
+<h2 id="五、模型应用及不足"><a href="#五、模型应用及不足" class="headerlink" title="五、模型应用及不足"></a>五、模型应用及不足</h2><p>Gao Feng等人对该模型做了大量的模拟实验，测试了模型在不同变化反射率，不同变化形状等情况下的表现。同时使用了Landsat和MODIS的观测数据对不同地物变化特征区域进行了检验。发现该算法可以较好的捕捉植被的物候变化，同时能保留空间细节的信息。但是在测试区域十分异质时，模型预测比较困难。该算法更多适用于地物覆盖上同质的像元，且这样的像元越多，预测效果越好。同时在地表变化非常微小不能被MODIS记录或者在Landsat影像中无可用的数据时，不能进行很好的预测。<br>总体来说，这个算法开创了遥感数据融合的先河，具有很大的借鉴价值。之后的一些数据融合的算法也是在这个基础思路上改进的。它可以推广到其它类型的遥感数据融合，例如欧空局的哨兵数据和MODIS数据融合。</p>
+<p>注：该博文更多的是参考Gao Feng、Jeff Masek等人于2006年在IEEE TRANSACTIONS ON GEOSCIENCE AND REMOTE SENDING发表的论文:On the Blending of the Landsat and MODIS Surface: Predicting Daily Landsat Surface Reflectance（VOL.44, NO.8,AUGUST 2006)，更多细节请参考此篇文献。</p>
+<p>另本博文未经允许禁止转载，转载请注明来源。</p>
 
       
 
@@ -264,7 +358,7 @@
     <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/11/03/hello-world/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/11/03/STARFM/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -278,18 +372,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/11/03/STARFM/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          STARFM
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/09/24/%E6%88%91%E7%9A%84%E7%A0%94%E7%A9%B6%E7%94%9F%E7%94%9F%E6%B4%BB/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">我的研究生生活</div>
+    <a href="/2019/11/03/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
       <i class="icon-circle-right"></i>
     </a>
   
