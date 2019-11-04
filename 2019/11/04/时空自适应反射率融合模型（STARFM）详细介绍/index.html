@@ -38,7 +38,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;svg.latex?\sigma_{mm}&amp;space;=&amp;space;(\sigma_{m}^{2}&amp;plus;\sigmsa_{m}^{2})^{1&#x2F;2}=\sqrt{2}*\sigma_{m}">
 <meta property="og:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;svg.latex?\sigma_{lm}&amp;space;=&amp;space;(\sigma_{m}^{2}&amp;plus;\sigma_{l}^{2})^{1&#x2F;2}">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;04&#x2F;%E6%97%B6%E7%A9%BA%E8%87%AA%E9%80%82%E5%BA%94%E5%8F%8D%E5%B0%84%E7%8E%87%E8%9E%8D%E5%90%88%E6%A8%A1%E5%9E%8B%EF%BC%88STARFM%EF%BC%89%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D&#x2F;workflow.jpg">
-<meta property="og:updated_time" content="2019-11-04T02:31:14.514Z">
+<meta property="og:updated_time" content="2019-11-04T02:42:11.658Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;latex.codecogs.com&#x2F;png.latex?C_{t}=\sum&amp;space;\left&amp;space;(&amp;space;F_{t}^{i}&amp;space;*A_{t}^{i}\right&amp;space;)">
   
@@ -228,7 +228,7 @@
 
 <p>这个idea带出来两个关键的概念：一是<strong>搜索窗</strong>(searching window);二是<strong>光谱相似像元</strong>(spectrally similar neighbor pixels)。搜索窗口的大小可以自己指定，该模型成败的关键是是否能寻找到与中心像元光谱特征相似的像元。合理的选择结果能够为预测提供增益效果，若使用了错误的像元，其效果反而会变差。</p>
 <h2 id="四、模型实现"><a href="#四、模型实现" class="headerlink" title="四、模型实现"></a>四、模型实现</h2><p>此部分阐述如何将一个数学模型变成一个可以在计算机实现并且可以评价预测结果所需要考虑的方面</p>
-<h3 id="（一）寻找光谱相似的邻近像元"><a href="#（一）寻找光谱相似的邻近像元" class="headerlink" title="（一）寻找光谱相似的邻近像元"></a>（一）寻找光谱相似的邻近像元</h3><p>上面提到，这一步是成败的关键。如何通过影像来判断什么样的像元是与中心像元光谱特征相似的，这一步一般有一下两种处理的方法：<br>一：非监督分类，此处使用的是红光波段和近红外波段值。<br>二：阈值分割<br>设定阈值，根据指定的波段对波段值进行划分。</p>
+<h3 id="（一）寻找光谱相似的邻近像元"><a href="#（一）寻找光谱相似的邻近像元" class="headerlink" title="（一）寻找光谱相似的邻近像元"></a>（一）寻找光谱相似的邻近像元</h3><p>上面提到，这一步是成败的关键。如何通过影像来判断什么样的像元是与中心像元光谱特征相似的，这一步一般有以下两种处理方法：<br>一：非监督分类，此处使用的是红光波段和近红外波段值。<br>二：阈值分割<br>设定阈值，根据指定的波段对波段值进行划分。</p>
 <h3 id="（二）权重函数的设置"><a href="#（二）权重函数的设置" class="headerlink" title="（二）权重函数的设置"></a>（二）权重函数的设置</h3><p>判断一个像素点计算的结果赋予多大的权重，是模型应用的另外一个关键。从通过以下三个方面来确定权重的大小：</p>
 <ol>
 <li>同一时间下Landsat与MODIS反射率的差异越小，其对应位置的权重越大，公式表达为:</li>
