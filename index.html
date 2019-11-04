@@ -250,7 +250,7 @@
 
 <h3 id="模型计算流程"><a href="#模型计算流程" class="headerlink" title="模型计算流程"></a>模型计算流程</h3><p>STARFM模型可以看成是一个领域运算，每次运算都遵循相同的步骤。搜索窗的大小根据图像特征自己确定，每一次估算一个像元的反射率时，都大致以下图的步骤。</p>
 <p>具体流程可以如下图所示：</p>
-<p><img src="/2019/11/04/%E6%97%B6%E7%A9%BA%E8%87%AA%E9%80%82%E5%BA%94%E5%8F%8D%E5%B0%84%E7%8E%87%E8%9E%8D%E5%90%88%E6%A8%A1%E5%9E%8B%EF%BC%88STARFM%EF%BC%89%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D/workflow.jpg" alt="计算流程"></p>
+<p><img src="/2019/11/04/%E6%97%B6%E7%A9%BA%E8%87%AA%E9%80%82%E5%BA%94%E5%8F%8D%E5%B0%84%E7%8E%87%E8%9E%8D%E5%90%88%E6%A8%A1%E5%9E%8B%EF%BC%88STARFM%EF%BC%89%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D/workflow.jpg" alt="计算流程"><br>【该图片来自于论文On the Blending of the Landsat and MODIS Surface: Predicting Daily Landsat Surface Reflectance】</p>
 <p>计算流程做以下说明，使用T1时刻获取的一对不同空间分辨率的影像对加上预测时刻MODIS的观测值，生成T0时刻下精细空间分辨率的反射率产品。该图是计算一个中心像元所经过的流程，所示范围为一个搜索窗。首先对数据进行预处理得到地表的反射率，对MODIS数据进行重采样，使空间分辨率和Landsat影像相同。步骤（1）是对Landsat影像进行非监督分类，得到与中心像元光谱类似的像元；步骤（2）是对非监督分类的结果进行筛选；（3）步骤通过权重计算公式计算各个邻近像元的权重大小，颜色越深表示权重相应越大。步骤（4）是加权计算中心像元T0时刻的反射率。<br>每个像元都经过以上流程，得到最后的预测时刻研究区域精细空间分辨率的反射率影像。</p>
 <h2 id="五、模型应用及不足"><a href="#五、模型应用及不足" class="headerlink" title="五、模型应用及不足"></a>五、模型应用及不足</h2><p>Gao Feng等人对该模型做了大量的模拟实验，测试了模型在不同变化反射率，不同变化形状等情况下的表现。同时使用了Landsat和MODIS的观测数据对不同地物变化特征区域进行了检验。发现该算法可以较好的捕捉植被的物候变化，同时能保留空间细节的信息。但是在测试区域十分异质时，模型预测比较困难。该算法更多适用于地物覆盖上同质的像元，且这样的像元越多，预测效果越好。同时在地表变化非常微小不能被MODIS记录或者在Landsat影像中无可用的数据时，不能进行很好的预测。<br>总体来说，这个算法开创了遥感数据融合的先河，具有很大的借鉴价值。之后的一些数据融合的算法也是在这个基础思路上改进的。它可以推广到其它类型的遥感数据融合，例如欧空局的哨兵数据和MODIS数据融合。</p>
 <p>注：该博文更多的是参考Gao Feng、Jeff Masek等人于2006年在IEEE TRANSACTIONS ON GEOSCIENCE AND REMOTE SENDING发表的论文:On the Blending of the Landsat and MODIS Surface: Predicting Daily Landsat Surface Reflectance（VOL.44, NO.8,AUGUST 2006)，更多细节请参考此篇文献。</p>
